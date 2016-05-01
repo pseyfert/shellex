@@ -1,0 +1,40 @@
+# load tab completion stuff http://www.refining-linux.org/archives/40/ZSH-Gem-5-Menu-selection/
+autoload -U compinit
+compinit
+
+setopt +o bashautolist
+setopt +o listambiguous
+setopt +o autolist
+
+# these two don't seem helpful
+#setopt +o menucomplete
+#setopt +o automenu
+
+## From the zsh man page:
+# In the form `yes=num', where `yes' may be any of the true values (`yes',
+# `true', `on' and `1'), menu completion will be turned on if there are at least
+# num matches.
+#
+# In the form `select=num', menu selection will only be started if there are at
+# least num matches.
+
+#neither of the three doesn't go to top. and doesn't do highlighting
+#zstyle ':completion:*:default' menu yes=0          # BAD: doesn't show ambiguity before picking the first, and no highlighting
+#zstyle ':completion:*:default' menu select=0 yes=0 # BAD: doesn't show ambiguity before picking the first
+zstyle ':completion:*:default' menu select=0
+zstyle ':completion:*:default' compstate last_prompt=1
+
+# I don't activate `interactive' or `search' but they seem worth looking at:
+#
+## From the zsh man page:
+# Finally, it is possible to activate two special modes of menu selection. The
+# word `interactive' in the value causes interactive mode to be entered
+# immediately when menu selection is started; see the description of the
+# zsh/complist module in zshmodules(1) for a description of interactive mode.
+# Including the string `search' does the same for incremental search mode. To
+# select backward incremental search, include the string `search-backward'.
+
+## From the zsh man page:
+# If the value is `0' (zero), the list is scrolled by half-screenfuls
+zstyle ':completion:*:default' select-scroll 0
+
