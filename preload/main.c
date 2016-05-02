@@ -43,7 +43,7 @@ int ioctl (int d, int request, char *argp) {
       if (stream) {
         char *ret = fgets(str,6,stream);
         fclose(stream);
-        if (str != NULL) {
+        if (ret != NULL && str != NULL) {
           /* this may be -500 */
           max_rows = atoi(str);
         }
