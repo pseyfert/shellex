@@ -39,7 +39,7 @@ int ioctl (int d, int request, char *argp) {
 
         char *fname = getenv("SHELLEX_SIZE_FILE");
         if (fname != NULL && fname[0] != '\0') {
-            FILE *stream = fopen (fname,"r");
+            FILE *stream = fopen(fname,"r");
             char str[5] = "-500";
             if (stream != NULL) {
                 char *ret = fgets(str,5,stream);
