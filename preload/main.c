@@ -37,17 +37,19 @@ int ioctl (int d, int request, char *argp) {
 
     if (max_rows < 0 ) {
 
-      char *fname = getenv("SHELLEX_SIZE_FILE");
-      FILE *stream = fopen (fname,"r");
-      char str[5] = "-500";
-      if (stream) {
-        char *ret = fgets(str,6,stream);
-        fclose(stream);
-        if (ret != NULL && str != NULL) {
-          /* this may be -500 */
-          max_rows = atoi(str);
+        char *fname = getenv("SHELLEX_SIZE_FILE");
+        if (fname != NULL && fname[0] != '\0') {
+            FILE *stream = fopen (fname,"r");
+            char str[5] = "-500";
+            if (stream != NULL) {
+                char *ret = fgets(str,5,stream);
+                fclose(stream);
+                if (ret != NULL) {
+                    /* this may be -500 */
+                    max_rows = atoi(str);
+                }
+            }
         }
-      }
     }
 
     int retval = orig_ioctl(d, request, (char *)argp);
@@ -55,7 +57,7 @@ int ioctl (int d, int request, char *argp) {
 
     /* max_rows is still negative at first invocation */
     int fheight = ws->ws_ypixel / ws->ws_row;
-    ws->ws_row = (max_rows>0)?max_rows:25;
+    ws->ws_row = (max_rows > 0) ? max_rows : 25;
     ws->ws_ypixel = ws->ws_row * fheight;
 
     return retval;
