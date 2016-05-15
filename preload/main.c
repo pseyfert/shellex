@@ -7,6 +7,7 @@
 #include <dlfcn.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 /* We can not take this from <sys/ioctl.h>, because it would define the
  * ioctl-function itself
@@ -51,6 +52,13 @@ int ioctl (int d, int request, char *argp) {
             }
         }
     }
+    if (max_rows > 0 ) {
+        char *fname = getenv("SHELLEX_SIZE_FILE");
+        if (fname != NULL && fname[0] != '\0') {
+            unlink(fname);
+        }
+    }
+
 
     int retval = orig_ioctl(d, request, (char *)argp);
     struct winsize *ws = (struct winsize *)argp;

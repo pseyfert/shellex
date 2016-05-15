@@ -2,7 +2,6 @@
 # Make zsh exit on escape
 # © 2013 Axel Wagner and contributors (see also: LICENSE)
 function _shellex_exit {
-    rm $SHELLEX_SIZE_FILE
     exit
 }
 zle -N _shellex_exit
