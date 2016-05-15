@@ -48,14 +48,11 @@ int ioctl (int d, int request, char *argp) {
                 if (ret != NULL) {
                     /* this may be -500 */
                     max_rows = atoi(str);
+                    if (max_rows > 0 ) {
+                        unlink(fname);
+                    }
                 }
             }
-        }
-    }
-    if (max_rows > 0 ) {
-        char *fname = getenv("SHELLEX_SIZE_FILE");
-        if (fname != NULL && fname[0] != '\0') {
-            unlink(fname);
         }
     }
 
