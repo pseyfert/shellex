@@ -39,6 +39,5 @@ function shellex_preexec () {
     exit
 }
 
-# We use preexec_functions, so that the user can decide to overwrite our choice
-# or ammend it by own functions
-preexec_functions=(shellex_preexec)
+# The preexec function will be set later not to affect the remaining conf files,
+# but defined now, so that the user can overwrite it.

@@ -1,0 +1,5 @@
+# vim:ft=zsh
+# We use preexec_functions, so that the user can decide to overwrite our choice
+# or ammend it by own functions.
+# Clear the terminal-window at last, but before the preexec_functions is active.
+preexec_functions=(shellex_preexec) ; clear
