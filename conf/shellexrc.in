@@ -1,0 +1,15 @@
+# http://stackoverflow.com/a/10981499
+# http://unix.stackexchange.com/a/26825
+thefiles=(@SYSCONFDIR@/shellex/* $HOME/.shellex/*(N))
+# http://stackoverflow.com/a/9516801
+uniquified=( $( for f in "${thefiles[@]}" ; do basename $f ; done | sort -u ) )
+for f in $uniquified
+do
+# -r checks if file exists and is readable
+  if [[ -r $HOME/.shellex/$f ]]
+  then
+    source $HOME/.shellex/$f
+  else
+    source @SYSCONFDIR@/shellex/$f
+  fi
+done

@@ -194,20 +194,8 @@ sub on_start {
 
     print "loading config\n";
     $self->tt_write($self->locale_encode("unset LD_PRELOAD\n"));
+    $self->tt_write($self->locale_encode(". @SYSCONFDIR@/shellexrc\n"));
 
-    my %fileset;
-    map { $fileset{basename($_)} = 1 } <@SYSCONFDIR@/shellex/*>;
-    map { $fileset{basename($_)} = 1 } <$ENV{HOME}/.shellex/*>;
-
-    my @files = sort keys %fileset;
-
-    for my $f (@files) {
-        if (-e "$ENV{HOME}/.shellex/$f") {
-            $self->tt_write($self->locale_encode(". $ENV{HOME}/.shellex/$f\n"));
-        } else {
-            $self->tt_write($self->locale_encode(". @SYSCONFDIR@/shellex/$f\n"));
-        }
-    }
     ();
 }
 
