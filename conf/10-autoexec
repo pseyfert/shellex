@@ -13,16 +13,8 @@ function shellex_preexec () {
         return 0
     fi
 
-    # manually write history to histfile
-    # this is indeed more hack, the child zsh which executes $file should do this
-    if [ -n "$HISTFILE" ]
-    then
-        # We write the short form of the command to history
-        echo "$1" >> $HISTFILE
-    fi
-
     # prevent writing meaningless "zsh $file > /dev/null ...." to history
-    unset HISTFILE
+    # unset HISTFILE
 
     # Execute the tempfile, then exit
     zsh -c $3 > /dev/null 2>&1 & disown
