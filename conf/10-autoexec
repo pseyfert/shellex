@@ -13,9 +13,6 @@ function shellex_preexec () {
         return 0
     fi
 
-    # prevent writing meaningless "zsh $file > /dev/null ...." to history
-    # unset HISTFILE
-
     # Execute the tempfile, then exit
     zsh -c $3 > /dev/null 2>&1 & disown
 
