@@ -5,7 +5,7 @@
 # get array of all relevant files
 # http://stackoverflow.com/a/10981499
 # http://unix.stackexchange.com/a/26825
-thefiles=(@SYSCONFDIR@/shellex/* $HOME/.shellex/*(.N))
+thefiles=(@DESTDIR@@SYSCONFDIR@/shellex/* $HOME/.shellex/*(.N))
 
 # get the basenames of all files and make unique list
 # http://stackoverflow.com/a/9516801
@@ -19,6 +19,6 @@ do
   then
     source $HOME/.shellex/$f
   else
-    source @SYSCONFDIR@/shellex/$f
+    source @DESTDIR@@SYSCONFDIR@/shellex/$f
   fi
 done
