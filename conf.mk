@@ -24,7 +24,8 @@ conf/shellexrc: conf/shellexrc.in
 
 install-rc: conf/shellexrc
 	echo "[INSTALL] $@"
-	$(INSTALL) -m 0644 conf/shellexrc $(DESTDIR)$(SYSCONFDIR)/shellexrc
+	$(INSTALL) -m 0644 conf/shellexrc $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/; \
+	[ -e $(DESTDIR)$(SYSCONFDIR)/shellexrc ] || ln -s $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/shellexrc $(DESTDIR)$(SYSCONFDIR)/shellexrc
 
 clean-shellexrc:
 	echo "[CLEAN] conf/shellexrc"
