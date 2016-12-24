@@ -49,10 +49,10 @@ terminal window.
 
 == CONFIGURATION
 
-*shellex* configuration snippets can be found in *@PREFIX@@LIBDIR@/shellex/*.
+*shellex* configuration snippets can be found in *@DESTDIR@@PREFIX@@LIBDIR@/shellex/*.
 
-On start, *shellex* looks into @SYSCONFDIR@/shellex for default-snippets to
-source (usually this will be symlinks to *@PREFIX@@LIBDIR@/shellex/*) as well
+On start, *shellex* looks into @DESTDIR@@SYSCONFDIR@/shellex for default-snippets to
+source (usually this will be symlinks to *@DESTDIR@@PREFIX@@LIBDIR@/shellex/*) as well
 as into *$HOME/.shellex/* for any user-configuration. If a file of the same
 name exists in both locations, it will only use the one in *$HOME/.shellex/*.
 
@@ -60,7 +60,7 @@ To customize shellex, you can do the following things in *$HOME/.shellex/*:
 
 1. Overwrite a default by creating a new snippet of the same name
 2. Not include a default by creating a symlink to */dev/null* of the same same
-3. Include an example-snippet not used by default, by creating a symlink to *@PREFIX@@LIBDIR@/shellex/snippet*
+3. Include an example-snippet not used by default, by creating a symlink to *@DESTDIR@@PREFIX@@LIBDIR@/shellex/snippet*
 4. Write you own snippets with a currently unused name
 
 To avoid naming-conflicts in the future, you should add a common suffix to all

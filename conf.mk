@@ -8,8 +8,9 @@ install-conf:
 	do \
 		$(INSTALL) -m 0644 $${file} $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/conf/; \
 	done
+	# NB: no PREFIX needed between DESTDIR and SYSCONFDIR
 	$(INSTALL) -d -m 0755 $(DESTDIR)$(SYSCONFDIR)/shellex
 	for link in $(default_confs); \
 	do \
-		[ -e $(DESTDIR)$(SYSCONFDIR)/shellex/$${link} ] || ln -s $(PREFIX)$(LIBDIR)/shellex/conf/$${link} $(DESTDIR)$(SYSCONFDIR)/shellex; \
+		[ -e $(DESTDIR)$(SYSCONFDIR)/shellex/$${link} ] || ln -s $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/conf/$${link} $(DESTDIR)$(SYSCONFDIR)/shellex; \
 	done

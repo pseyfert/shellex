@@ -5,5 +5,5 @@
 # © 2013 Axel Wagner and contributors (see also: LICENSE)
 
 
-export LD_PRELOAD="@PREFIX@@LIBDIR@/shellex/shellex_preload.so"
-exec urxvt -perl-lib @PREFIX@@LIBDIR@/shellex/urxvt -pe shellex -override-redirect -name shellex $* -e env -u LD_PRELOAD zsh -f
+export LD_PRELOAD="@DESTDIR@@PREFIX@@LIBDIR@/shellex/shellex_preload.so"
+exec urxvt -perl-lib @DESTDIR@@PREFIX@@LIBDIR@/shellex/urxvt -pe shellex -override-redirect -name shellex $* -e env -u LD_PRELOAD zsh -f
