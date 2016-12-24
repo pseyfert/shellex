@@ -7,7 +7,7 @@ default_confs := 10-autoexec 20-completion 20-nobeep 40-escape 40-home_end 40-se
 install-conf:
 	echo "[INSTALL] $@"
 	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/conf
-	for file in $(wildcard conf/*); \
+	for file in $(wildcard conf/[0-9][0-9]-*); \
 	do \
 		$(INSTALL) -m 0644 $${file} $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/conf/; \
 	done
