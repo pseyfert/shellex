@@ -204,7 +204,7 @@ sub on_start {
 
     print "loading config\n";
     $self->tt_write($self->locale_encode("unset LD_PRELOAD\n"));
-    $self->tt_write($self->locale_encode(". @SYSCONFDIR@/shellexrc\n"));
+    $self->tt_write($self->locale_encode(". @DESTDIR@@SYSCONFDIR@/shellexrc\n"));
 
     ();
 }

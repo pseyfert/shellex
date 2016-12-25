@@ -7,14 +7,15 @@ default_confs := 10-autoexec 20-nobeep 40-escape 40-home_end 40-setprompt 40-sig
 install-conf:
 	echo "[INSTALL] $@"
 	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/conf
-	for file in $(wildcard conf/*); \
+	for file in $(wildcard conf/[0-9][0-9]-*); \
 	do \
 		$(INSTALL) -m 0644 $${file} $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/conf/; \
 	done
+	# NB: no PREFIX needed between DESTDIR and SYSCONFDIR
 	$(INSTALL) -d -m 0755 $(DESTDIR)$(SYSCONFDIR)/shellex
 	for link in $(default_confs); \
 	do \
-		[ -e $(DESTDIR)$(SYSCONFDIR)/shellex/$${link} ] || ln -s $(PREFIX)$(LIBDIR)/shellex/conf/$${link} $(DESTDIR)$(SYSCONFDIR)/shellex; \
+		[ -e $(DESTDIR)$(SYSCONFDIR)/shellex/$${link} ] || ln -s $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/conf/$${link} $(DESTDIR)$(SYSCONFDIR)/shellex; \
 	done
 
 conf/shellexrc: conf/shellexrc.in
@@ -23,7 +24,8 @@ conf/shellexrc: conf/shellexrc.in
 
 install-rc: conf/shellexrc
 	echo "[INSTALL] $@"
-	$(INSTALL) -m 0644 conf/shellexrc $(DESTDIR)$(SYSCONFDIR)/shellexrc
+	$(INSTALL) -m 0644 conf/shellexrc $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/; \
+	[ -e $(DESTDIR)$(SYSCONFDIR)/shellexrc ] || ln -s $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/shellexrc $(DESTDIR)$(SYSCONFDIR)/shellexrc
 
 clean-shellexrc:
 	echo "[CLEAN] conf/shellexrc"
