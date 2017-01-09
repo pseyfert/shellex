@@ -128,35 +128,6 @@ sub geometry_from_focus {
     }
 }
 
-sub slurp {
-    open my $fh, '<', shift;
-    local $/;
-    <$fh>;
-}
-
-sub gen_conf {
-    my ($cfg, $cfgname) = tempfile("/tmp/shellex-XXXXXXXX", UNLINK => 0);
-
-    print $cfg "rm $cfgname\n";
-
-    my %fileset;
-    map { $fileset{basename($_)} = 1 } <@SYSCONFDIR@/shellex/*>;
-    map { $fileset{basename($_)} = 1 } <$ENV{HOME}/.shellex/*>;
-
-    my @files = sort keys %fileset;
-
-    for my $f (@files) {
-        if (-e "$ENV{HOME}/.shellex/$f") {
-            print $cfg slurp("$ENV{HOME}/.shellex/$f");
-        } else {
-            print $cfg slurp("@SYSCONFDIR@/shellex/$f");
-        }
-    }
-    close($cfg);
-
-    return $cfgname;
-}
-
 # This hook is run when the extension is first initialized, before any windows
 # are created or mapped. There is not much work we can do here.
 sub on_init {
@@ -203,7 +174,17 @@ sub on_start {
 
     # This environment variable is used by the LD_PRELOAD ioctl-override to
     # determine the values to send to the shell
-    $ENV{SHELLEX_MAX_ROWS} = int($self->{h} / $self->fheight);
+    # TODO revisit communication protocol (from file to pipe?)
+    # TODO check if user defined their own SHELLEX_MAX_ROWS, which should be used like
+    #$ENV{SHELLEX_MAX_ROWS} = $sane_max_rows < $ENV{SHELLEX_MAX_ROWS} ? $sane_max_rows : $ENV{SHELLEX_MAX_ROWS} ;
+    my $sane_max_rows = int($self->{h} / $self->fheight) - 10;
+
+    $ENV{SHELLEX_MAX_ROWS} = $sane_max_rows;
+    my $filename = $ENV{SHELLEX_SIZE_FILE};
+    open(my $fh, '>', $filename);
+    print $fh "$ENV{SHELLEX_MAX_ROWS}\n";
+    close $fh;
+    print "writing max rows file done\n";
 
     $self->{border} = $self->x_resource('internalBorder');
 
@@ -221,9 +202,10 @@ sub on_start {
 
     $self->XMoveResizeWindow($self->parent, $self->{x}, $y, $self->{w}, $height);
 
-    my $cfg = gen_conf();
+    print "loading config\n";
+    $self->tt_write($self->locale_encode("unset LD_PRELOAD\n"));
+    $self->tt_write($self->locale_encode(". @SYSCONFDIR@/shellexrc\n"));
 
-    $self->tt_write($self->locale_encode(". $cfg\n"));
     ();
 }
 
@@ -243,6 +225,7 @@ sub on_line_update {
         }
     }
     $nrow = $nrow > 0 ? $nrow : 1;
+    $nrow = $nrow > $ENV{SHELLEX_MAX_ROWS} ? $ENV{SHELLEX_MAX_ROWS} : $nrow;
     print "resizing to $nrow\n";
 
     # If the window is supposed to be at the bottom, we have to move the
@@ -315,6 +298,8 @@ sub on_add_lines {
     print "add_lines(string = \"$str\")\n";
 
     my $nrow = $self->predict_term_size($string);
+    $nrow = $nrow > 0 ? $nrow : 1;
+    $nrow = $nrow > $ENV{SHELLEX_MAX_ROWS} ? $ENV{SHELLEX_MAX_ROWS} : $nrow;
     print "resizing to $nrow\n";
 
     # If the window is supposed to be at the bottom, we have to move the
