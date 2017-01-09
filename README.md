@@ -73,12 +73,46 @@ via your package manager.
 Else, or if you want to help developing, just do
 
 ```sh
-$ git checkout git://github.com/Merovius/shellex.git
+$ git clone git://github.com/Merovius/shellex.git
 $ cd shellex
 $ make
 $ make install
 ```
 
+for installing in `$(HOME).local`
+
+```sh
+$ git clone git://github.com/Merovius/shellex.git
+$ cd shellex
+$ PREFIX=$HOME/.local make
+$ PREFIX=$HOME/.local make install
+```
+
+Usage
+=====
+
+After installing `shellex` you probably want to bind it to a shortcut - most
+likely Alt+F2. How to do this depends on your desktop environment and/or window
+manager.
+
+## xbindkeys
+
+If you're running [xbindkeys](http://www.nongnu.org/xbindkeys/xbindkeys.html),
+the entry for your `~/.xbindkeysrc` file might look like:
+
+```
+"shellex"
+    alt + c:68
+```
+
+## i3
+
+[i3](i3wm.org) shortcuts can be modified as described in the
+[official documentation](https://i3wm.org/docs/userguide.html).
+
+```
+bindsym Mod1+F2 exec shellex
+```
 
 Contributing
 ============
