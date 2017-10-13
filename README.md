@@ -139,6 +139,19 @@ following is a not comprehensive list of highly appreciated ways to contribute:
    to maintain the translation.
 
 
+Customizations
+==============
+
+Users are invited to publish their customizations. Either as a contribution
+(see above) if these are changes that are a sensible default for all users, or
+in their own small packages which contain only the customizations. Especially,
+when the customization will be useful for many, but not all users.
+
+Existing customization projects are:
+
+* [pseyfert's customizations](https://github.com/pseyfert/shellex-customizations)
+* Your project here
+
 Configuration
 =============
 
