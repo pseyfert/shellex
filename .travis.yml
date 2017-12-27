@@ -1,5 +1,11 @@
 language: c
-script: make && make format
+script:
+  - make
+  - make format
+  - git diff --stat --exit-code
 
 before_install:
  - sudo apt-get build-dep shellex
+ - sudo apt-get install clang-format
+ - sudo apt-get install perltidy
+ - sudo apt-get install vim
