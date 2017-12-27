@@ -1,2 +1,5 @@
 language: c
 install: make
+
+before_install:
+ - sudo apt-get install -qq rxvt-unicode, zsh, libx11-protocol-perl, x11-xserver-utils
