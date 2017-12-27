@@ -22,7 +22,7 @@ preexec_functions=(shellex_preexec)
 function empty-buffer-to-exit() {
     if [[ $#BUFFER == 0 ]]; then
         fc -P
-        BUFFER="exit"
+        exit
     fi
 }
 # set special widget, see man zshzle
