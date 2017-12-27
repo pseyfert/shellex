@@ -1,7 +1,7 @@
 language: c
 script:
   - make
-  - make install
+  - sudo make install
   - make format_perl
   - make format_c
   - git diff --stat --exit-code
