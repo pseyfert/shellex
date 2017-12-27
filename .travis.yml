@@ -1,5 +1,5 @@
 language: c
-install: make
+script: make && make format
 
 before_install:
- - sudo apt-get install -qq rxvt-unicode, zsh, libx11-protocol-perl, x11-xserver-utils
+ - sudo apt-get build-dep shellex
