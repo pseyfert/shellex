@@ -249,7 +249,7 @@ sub on_line_update {
     if ($self->{bottom}) {
         $y -= 2 + $nrow * $self->fheight;
     }
-    $self->cmd_parse("\e[8;$nrow;t\e[3;$self->{x};${y}t");
+    $self->cmd_parse("\e[24;$nrow;t\e[3;$self->{x};${y}t");
     ();
 }
 
@@ -327,7 +327,7 @@ sub on_add_lines {
     if ($self->{bottom}) {
         $y -= 2 + $nrow * $self->fheight;
     }
-    $self->cmd_parse("\e[8;$nrow;t\e[3;$self->{x};${y}t");
+    $self->cmd_parse("\e[24;$nrow;t\e[3;$self->{x};${y}t");
     ();
 }
 
