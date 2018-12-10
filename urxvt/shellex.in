@@ -243,13 +243,12 @@ sub on_line_update {
     $nrow = $nrow > 0 ? $nrow : 1;
     print "resizing to $nrow\n";
 
+    my $y = $self->{y};
+    my $height = 2 * $self->{border} + $nrow * $self->{row_height};
     # If the window is supposed to be at the bottom, we have to move the
     # window up a little bit
-    my $y = $self->{y};
-    if ($self->{bottom}) {
-        $y -= 2 + $nrow * $self->fheight;
-    }
-    $self->cmd_parse("\e[8;$nrow;t\e[3;$self->{x};${y}t");
+    $y -= $height if $self->{bottom};
+    $self->XMoveResizeWindow($self->parent, $self->{x}, $y, $self->{w}, $height);
     ();
 }
 
@@ -321,13 +320,13 @@ sub on_add_lines {
     $nrow = $nrow > 0 ? $nrow : 1;
     print "resizing to $nrow\n";
 
+    my $y = $self->{y};
+    my $height = 2 * $self->{border} + $nrow * $self->{row_height};
     # If the window is supposed to be at the bottom, we have to move the
     # window up a little bit
-    my $y = $self->{y};
-    if ($self->{bottom}) {
-        $y -= 2 + $nrow * $self->fheight;
-    }
-    $self->cmd_parse("\e[8;$nrow;t\e[3;$self->{x};${y}t");
+    $y -= $height if $self->{bottom};
+    $self->XMoveResizeWindow($self->parent, $self->{x}, $y, $self->{w}, $height);
+    # $self->cmd_parse("\014");
     ();
 }
 
