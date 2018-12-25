@@ -23,7 +23,12 @@ conf/shellexrc: conf/shellexrc.in
 
 install-rc: conf/shellexrc
 	echo "[INSTALL] $@"
+	$(INSTALL) -d -m 0755 $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex
 	$(INSTALL) -m 0644 conf/shellexrc $(DESTDIR)$(PREFIX)$(LIBDIR)/shellex/shellexrc
+
+	# $DESTDIR/$SYSCONFDIR may not exist, but if it does, don't alter the permissions
+	# (this is not a shellex specific directory)
+	[ -d $(DESTDIR)$(SYSCONFDIR) ] || $(INSTALL) -d -m 0755 $(DESTDIR)$(SYSCONFDIR)
 	[ -e $(DESTDIR)$(SYSCONFDIR)/shellexrc ] || ln -s $(PREFIX)$(LIBDIR)/shellex/shellexrc $(DESTDIR)$(SYSCONFDIR)/shellexrc
 
 clean-shellexrc:
